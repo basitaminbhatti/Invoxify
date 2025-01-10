@@ -22,6 +22,28 @@ import {
   DropdownMenuItem,
 } from "@/components/ui/dropdown-menu";
 import { signOut } from "../utils/auth";
+import prisma from "../utils/db";
+import { redirect } from "next/navigation";
+
+// This funtion if the user has completed the onboarding process.
+// If the user has not completed the onboarding process,
+// it will redirect the user to the onboarding page.
+async function getUser(userId: string) {
+  const data = await prisma.user.findUnique({
+    where: {
+      id: userId,
+    },
+    select: {
+      firstName: true,
+      lastName: true,
+      address: true,
+    },
+  });
+
+  if (!data?.firstName || !data.lastName || !data.address) {
+    redirect("/onboarding");
+  }
+}
 
 export default async function DashboardLayout({
   children,
@@ -29,6 +51,8 @@ export default async function DashboardLayout({
   children: ReactNode;
 }) {
   const session = await RequireUser();
+  const data = await getUser(session.user?.id as string);
+
   return (
     <div className="grid min-h-screen w-full md:gird-cols-[220px_1fr] lg:grid-cols-[280px_1fr]">
       <div className="hidden border-r bg-muted/40 md:block">
