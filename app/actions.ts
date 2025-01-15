@@ -1,4 +1,4 @@
-"use server"
+"use server";
 
 import { redirect } from "next/navigation";
 import { invoiceSchema, onboardingSchema } from "./utils/zodSchemas";
@@ -8,30 +8,29 @@ import { parseWithZod } from "@conform-to/zod";
 import { emailClient } from "./utils/mailtrap";
 import { formatCurrency } from "./utils/formatCurrency";
 
-
 // ================== Onboarding User =====================
-export async function onboardUser(prevState:any,formData:FormData) {
-    const session = await RequireUser();
+export async function onboardUser(prevState: any, formData: FormData) {
+  const session = await RequireUser();
 
-    const submission = parseWithZod(formData, {
-        schema: onboardingSchema,
-      });
+  const submission = parseWithZod(formData, {
+    schema: onboardingSchema,
+  });
 
-      if (submission.status !== "success") {
-        return submission.reply();
-      }
+  if (submission.status !== "success") {
+    return submission.reply();
+  }
 
-      const data = await prisma.user.update({
-        where: {
-          id: session.user?.id,
-        },
-        data: {
-          firstName: submission.value.firstName,
-          lastName: submission.value.lastName,
-          address: submission.value.address,
-        },
-      });
-      return redirect("/dashboard");
+  const data = await prisma.user.update({
+    where: {
+      id: session.user?.id,
+    },
+    data: {
+      firstName: submission.value.firstName,
+      lastName: submission.value.lastName,
+      address: submission.value.address,
+    },
+  });
+  return redirect("/dashboard");
 }
 
 // ================== Create Invoice =====================
@@ -69,9 +68,9 @@ export async function createInvoice(prevState: any, formData: FormData) {
       note: submission.value.note,
       userId: session.user?.id,
     },
-});
+  });
 
-// EMAIL SENDING
+  // EMAIL SENDING
   const sender = {
     email: "hello@demomailtrap.com",
     name: "Abdul Basit",
@@ -80,18 +79,17 @@ export async function createInvoice(prevState: any, formData: FormData) {
   const recipients = [
     {
       email: "basitaminbhatti@gmail.com",
-    }
+    },
   ];
 
   const invoicedueDate = new Intl.DateTimeFormat("en-US", {
     dateStyle: "long",
-  }).format(new Date(submission.value.date))
-
+  }).format(new Date(submission.value.date));
 
   const invoicetotalAmount = formatCurrency({
     amount: submission.value.total,
     currency: submission.value.currency as any,
-  })
+  });
 
   emailClient.send({
     from: sender,
@@ -102,12 +100,9 @@ export async function createInvoice(prevState: any, formData: FormData) {
       invoiceNumber: submission.value.invoiceNumber,
       dueDate: invoicedueDate,
       totalAmount: invoicetotalAmount,
-      "invoiceLink": "Test_InvoiceLink"
-    }})
+      invoiceLink: `http://localhost:3000/api/invoice/${data.id}`,
+    },
+  });
 
-
-
-
-return redirect("/dashboard/invoices");
-
+  return redirect("/dashboard/invoices");
 }
