@@ -1,3 +1,4 @@
+"use client";
 import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
@@ -14,12 +15,40 @@ import {
   Trash,
 } from "lucide-react";
 import Link from "next/link";
+import { toast } from "sonner";
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from "@/components/ui/alert-dialog";
 
 interface iAppProps {
   id: string;
 }
 
 export function InvoiceActions({ id }: iAppProps) {
+  const handleSendReminder = () => {
+    toast.promise(
+      fetch(`/api/email/${id}`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }),
+      {
+        loading: "Sending reminder email...",
+        success: "Reminder email sent successfully",
+        error: "Failed to send reminder email",
+      }
+    );
+  };
+
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
@@ -45,11 +74,32 @@ export function InvoiceActions({ id }: iAppProps) {
           </Link>
         </DropdownMenuItem>
         {/* ============ ITEM THREE REMINDER EMAIL ============ */}
-        <DropdownMenuItem asChild>
-          <Link href="/" className="cursor-pointer">
-            <Mail className="size-4 mr-2" /> Reminder Email
-          </Link>
-        </DropdownMenuItem>
+        <AlertDialog>
+          <AlertDialogTrigger asChild>
+            <DropdownMenuItem
+              onSelect={(e) => e.preventDefault()}
+              className="cursor-pointer"
+            >
+              <Mail className="size-4 mr-2" /> Reminder Email
+            </DropdownMenuItem>
+          </AlertDialogTrigger>
+          <AlertDialogContent>
+            <AlertDialogHeader>
+              <AlertDialogTitle>Send Invoice Reminder?</AlertDialogTitle>
+              <AlertDialogDescription>
+                Are you sure you want to send a reminder for this invoice? This
+                will notify the recipient about their pending payment.
+              </AlertDialogDescription>
+            </AlertDialogHeader>
+            <AlertDialogFooter>
+              <AlertDialogCancel>Cancel</AlertDialogCancel>
+              <AlertDialogAction onClick={handleSendReminder}>
+                Send Reminder
+              </AlertDialogAction>
+            </AlertDialogFooter>
+          </AlertDialogContent>
+        </AlertDialog>
+
         {/* ============ ITEM FOUR DELETE INVOICE ============ */}
         <DropdownMenuItem asChild>
           <Link href="/" className="cursor-pointer">
