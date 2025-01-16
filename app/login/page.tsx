@@ -8,7 +8,7 @@ import {
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import { auth, signIn } from "../utils/auth";
-import { SubmitButton } from "../components/app/components/SubmitButtons";
+import { SubmitButton } from "../components/SubmitButtons";
 import { redirect } from "next/navigation";
 export default async function Login() {
   // This will check is the user is already login if yes then it will redirect to the dashboard page

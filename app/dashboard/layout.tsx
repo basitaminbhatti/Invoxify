@@ -3,7 +3,7 @@ import { RequireUser } from "../utils/hooks";
 import Link from "next/link";
 import Image from "next/image";
 import Logo from "@/public/invoxify_Logo.png";
-import { DashboardLinks } from "../components/app/components/DashboardLinks";
+import { DashboardLinks } from "../components/DashboardLinks";
 import {
   Sheet,
   SheetContent,

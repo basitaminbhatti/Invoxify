@@ -1,4 +1,4 @@
-import CreateInvoice from "@/app/components/app/components/CreateInvoice";
+import CreateInvoice from "@/app/components/CreateInvoice";
 
 export default function InvoiceCreateRoute() {
   return (

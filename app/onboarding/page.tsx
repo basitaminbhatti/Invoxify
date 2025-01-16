@@ -8,7 +8,7 @@ import {
 } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { SubmitButton } from "../components/app/components/SubmitButtons";
+import { SubmitButton } from "../components/SubmitButtons";
 import { onboardUser } from "../actions";
 import { useActionState } from "react";
 import { useForm } from "@conform-to/react";
