@@ -1,6 +1,6 @@
 "use client";
 import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
+import { Button, buttonVariants } from "@/components/ui/button";
 import { Calendar } from "@/components/ui/calendar";
 import { Card, CardContent } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
@@ -20,12 +20,13 @@ import {
 import { Textarea } from "@/components/ui/textarea";
 import { CalendarIcon } from "lucide-react";
 import { useActionState, useState } from "react";
-import { SubmitButton } from "./app/components/SubmitButtons";
 import { useForm } from "@conform-to/react";
 import { parseWithZod } from "@conform-to/zod";
 import { invoiceSchema } from "@/app/utils/zodSchemas";
 import { createInvoice } from "@/app/actions";
 import { formatCurrency } from "@/app/utils/formatCurrency";
+import { SubmitButton } from "./SubmitButtons";
+import Link from "next/link";
 
 export default function CreateInvoice() {
   const [lastResult, action] = useActionState(createInvoice, undefined);
@@ -364,7 +365,13 @@ export default function CreateInvoice() {
             <p className="text-red-500 text-sm">{fields.note.errors}</p>
           </div>
           {/* ++++++++++++++ BUTTONS ++++++++++++++ */}
-          <div className="flex items-center justify-end mt-6">
+          <div className="flex items-center gap-4 justify-end mt-6">
+            <Link
+              className={buttonVariants({ variant: "outline" })}
+              href="/dashboard/invoices"
+            >
+              Cancel
+            </Link>
             <div>
               <SubmitButton text="Send Invoice to Client" />
             </div>

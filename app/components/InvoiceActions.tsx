@@ -30,9 +30,10 @@ import {
 
 interface iAppProps {
   id: string;
+  status: string;
 }
 
-export function InvoiceActions({ id }: iAppProps) {
+export function InvoiceActions({ id, status }: iAppProps) {
   const handleSendReminder = () => {
     toast.promise(
       fetch(`/api/email/${id}`, {
@@ -48,6 +49,21 @@ export function InvoiceActions({ id }: iAppProps) {
       }
     );
   };
+  // const handleDeleteInvoice = () => {
+  //   toast.promise(
+  //     fetch(`/api/invoice/${id}/delete`, {
+  //       method: "POST",
+  //       headers: {
+  //         "Content-Type": "application/json",
+  //       },
+  //     }),
+  //     {
+  //       loading: "Deleting invoice...",
+  //       success: "Invoice deleted successfully",
+  //       error: "Failed to delete invoice",
+  //     }
+  //   );
+  // };
 
   return (
     <DropdownMenu>
@@ -102,16 +118,21 @@ export function InvoiceActions({ id }: iAppProps) {
 
         {/* ============ ITEM FOUR DELETE INVOICE ============ */}
         <DropdownMenuItem asChild>
-          <Link href="/" className="cursor-pointer">
+          <Link href={`/dashboard/invoices/${id}/delete`}>
             <Trash className="size-4 mr-2" /> Delete Invoice
           </Link>
         </DropdownMenuItem>
+        {/* <DropdownMenuItem onClick={handleDeleteInvoice}>
+          <Trash className="size-4 mr-2" /> Delete Invoice 2
+        </DropdownMenuItem> */}
         {/* ============ ITEM FIVE MARK AS PAID ============ */}
-        <DropdownMenuItem asChild>
-          <Link href="/" className="cursor-pointer">
-            <CheckCircle className="size-4 mr-2" /> Mark as Paid
-          </Link>
-        </DropdownMenuItem>
+        {status !== "PAID" && (
+          <DropdownMenuItem asChild>
+            <Link href={`/dashboard/invoices/${id}/paid`}>
+              <CheckCircle className="size-4 mr-2" /> Mark as Paid
+            </Link>
+          </DropdownMenuItem>
+        )}
       </DropdownMenuContent>
     </DropdownMenu>
   );

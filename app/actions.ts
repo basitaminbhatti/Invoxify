@@ -70,39 +70,39 @@ export async function createInvoice(prevState: any, formData: FormData) {
     },
   });
 
-  // EMAIL SENDING
-  const sender = {
-    email: "hello@demomailtrap.com",
-    name: "Abdul Basit",
-  };
+  // // EMAIL SENDING
+  // const sender = {
+  //   email: "hello@demomailtrap.com",
+  //   name: "Abdul Basit",
+  // };
 
-  const recipients = [
-    {
-      email: "basitaminbhatti@gmail.com",
-    },
-  ];
+  // const recipients = [
+  //   {
+  //     email: "basitaminbhatti@gmail.com",
+  //   },
+  // ];
 
-  const invoicedueDate = new Intl.DateTimeFormat("en-US", {
-    dateStyle: "long",
-  }).format(new Date(submission.value.date));
+  // const invoicedueDate = new Intl.DateTimeFormat("en-US", {
+  //   dateStyle: "long",
+  // }).format(new Date(submission.value.date));
 
-  const invoicetotalAmount = formatCurrency({
-    amount: submission.value.total,
-    currency: submission.value.currency as any,
-  });
+  // const invoicetotalAmount = formatCurrency({
+  //   amount: submission.value.total,
+  //   currency: submission.value.currency as any,
+  // });
 
-  emailClient.send({
-    from: sender,
-    to: recipients,
-    template_uuid: "25d47ecd-845a-40a7-8e06-8179e48e0058",
-    template_variables: {
-      clientName: submission.value.clientName,
-      invoiceNumber: submission.value.invoiceNumber,
-      dueDate: invoicedueDate,
-      totalAmount: invoicetotalAmount,
-      invoiceLink: `http://localhost:3000/api/invoice/${data.id}`,
-    },
-  });
+  // emailClient.send({
+  //   from: sender,
+  //   to: recipients,
+  //   template_uuid: "25d47ecd-845a-40a7-8e06-8179e48e0058",
+  //   template_variables: {
+  //     clientName: submission.value.clientName,
+  //     invoiceNumber: submission.value.invoiceNumber,
+  //     dueDate: invoicedueDate,
+  //     totalAmount: invoicetotalAmount,
+  //     invoiceLink: `http://localhost:3000/api/invoice/${data.id}`,
+  //   },
+  // });
 
   return redirect("/dashboard/invoices");
 }
@@ -144,5 +144,36 @@ export async function editInvoice(prevState: any, formData: FormData) {
       note: submission.value.note,
     },
   });
+  return redirect("/dashboard/invoices");
+}
+
+// ================== Delete Invoice =====================
+export async function DeleteInvoice(invoiceId: string) {
+  const session = await RequireUser();
+
+  const data = await prisma.invoice.delete({
+    where: {
+      userId: session.user?.id,
+      id: invoiceId,
+    },
+  });
+
+  return redirect("/dashboard/invoices");
+}
+
+// ================== Mark As Paid =====================
+export async function MarkAsPaidAction(invoiceId: string) {
+  const session = await RequireUser();
+
+  const data = await prisma.invoice.update({
+    where: {
+      userId: session.user?.id,
+      id: invoiceId,
+    },
+    data: {
+      status: "PAID",
+    },
+  });
+
   return redirect("/dashboard/invoices");
 }
