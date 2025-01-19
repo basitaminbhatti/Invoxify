@@ -37,6 +37,7 @@ export async function GET(
       invoiceItemRate: true,
       total: true,
       note: true,
+      status: true,
     },
   });
 
@@ -75,6 +76,16 @@ export async function GET(
   pdf.setTextColor(55, 54, 67);
   pdf.text("INVOICE", 14, 70);
 
+  // =========== Invoice PAID ===========
+  if (data.status === "PAID") {
+    pdf.setFontSize(60);
+    pdf.setFont("helvetica", "bold");
+    pdf.setTextColor(155, 250, 210);
+    pdf.text("PAID", 140, 70);
+
+    pdf.setDrawColor(155, 250, 210);
+    pdf.rect(135, 53, 60, 20);
+  }
   // =========== Invoice Date ===========
   pdf.setFontSize(12);
   pdf.setFont("helvetica", "bold");
