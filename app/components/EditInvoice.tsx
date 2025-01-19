@@ -1,6 +1,6 @@
 "use client";
 import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
+import { Button, buttonVariants } from "@/components/ui/button";
 import { Calendar } from "@/components/ui/calendar";
 import { Card, CardContent } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
@@ -24,7 +24,7 @@ import { SubmitButton } from "./SubmitButtons";
 import { useForm } from "@conform-to/react";
 import { parseWithZod } from "@conform-to/zod";
 import { invoiceSchema } from "@/app/utils/zodSchemas";
-import { editInvoice } from "@/app/actions";
+import { handleInvoiceActions } from "@/app/actions";
 import { formatCurrency } from "@/app/utils/formatCurrency";
 import { Prisma } from "@prisma/client";
 import Link from "next/link";
@@ -34,7 +34,7 @@ interface iAppProps {
 }
 
 export default function EditInvoice({ data }: iAppProps) {
-  const [lastResult, action] = useActionState(editInvoice, undefined);
+  const [lastResult, action] = useActionState(handleInvoiceActions, undefined);
   const [form, fields] = useForm({
     lastResult,
 
@@ -60,7 +60,7 @@ export default function EditInvoice({ data }: iAppProps) {
         <form id={form.id} action={action} onSubmit={form.onSubmit} noValidate>
           <div className="flex flex-col gap-1 w-fit mb-6">
             <div className="flex items-center gap-4">
-              <Badge variant="secondary">Edit</Badge>
+              <Badge variant="secondary">{data.status}</Badge>
               <Input
                 name={fields.invoiceName.name}
                 key={fields.invoiceName.key}
@@ -69,6 +69,7 @@ export default function EditInvoice({ data }: iAppProps) {
               />
               {/* hidden input to store the id value for Edit Invoice Only to avoid Error */}
               <input type="hidden" name="id" value={data.id} />
+              <input type="hidden" name="action" id="actionInput" />
             </div>
             <p className="text-sm text-red-500">{fields.invoiceName.errors}</p>
           </div>
@@ -363,13 +364,75 @@ export default function EditInvoice({ data }: iAppProps) {
             <p className="text-red-500 text-sm">{fields.note.errors}</p>
           </div>
           {/* ++++++++++++++ BUTTONS ++++++++++++++ */}
-          <div className="flex items-center gap-4 justify-end mt-6">
-            <Button variant="outline" type="button">
-              <Link href="/dashboard/invoices">Cancel</Link>
-            </Button>
-            <div>
-              <SubmitButton text="Update Invoice" />
-            </div>
+          <div className="flex items-center gap-4 justify-between mt-6">
+            <Link
+              className={buttonVariants({ variant: "outline" })}
+              href="/dashboard/invoices"
+            >
+              Cancel
+            </Link>
+            {data.status == "DRAFT" ? (
+              <div className="flex gap-4">
+                <div>
+                  <SubmitButton
+                    value="editDraftInvoice"
+                    variant="secondary"
+                    text="Save as Draft"
+                    name="action"
+                    onClick={() => {
+                      const actionInput = document.getElementById(
+                        "actionInput"
+                      ) as HTMLInputElement | null;
+                      if (actionInput) {
+                        actionInput.value = "editDraftInvoice";
+                      } else {
+                        console.error(
+                          "Element with ID 'actionInput' not found."
+                        );
+                      }
+                    }}
+                  />
+                </div>
+                <div>
+                  <SubmitButton
+                    value="editClientInvoice"
+                    variant="default"
+                    text="Send Invoice to Client"
+                    name="action"
+                    onClick={() => {
+                      const actionInput = document.getElementById(
+                        "actionInput"
+                      ) as HTMLInputElement | null;
+                      if (actionInput) {
+                        actionInput.value = "editClientInvoice";
+                      } else {
+                        console.error(
+                          "Element with ID 'actionInput' not found."
+                        );
+                      }
+                    }}
+                  />
+                </div>
+              </div>
+            ) : (
+              <div>
+                <SubmitButton
+                  value="editInvoice"
+                  text="Update Invoice"
+                  name="action"
+                  onClick={() => {
+                    const actionInput = document.getElementById(
+                      "actionInput"
+                    ) as HTMLInputElement | null;
+                    if (actionInput) {
+                      actionInput.value = "editInvoice";
+                    } else {
+                      console.error("Element with ID 'actionInput' not found.");
+                    }
+                  }}
+                />
+              </div>
+            )}
           </div>
         </form>
       </CardContent>

@@ -7,13 +7,12 @@ export const onboardingSchema = z.object({
   address: z.string().min(2, "Address is required"),
 });
 
-
 // ===================== For Invoice =====================
 export const invoiceSchema = z.object({
   invoiceName: z.string().min(1, "Invoice Name is required"),
   total: z.number().min(1, "1$ is minimum"),
 
-  status: z.enum(["PAID", "PENDING"]).default("PENDING"),
+  status: z.enum(["PAID", "PENDING", "DRAFT"]).default("PENDING"),
 
   date: z.string().min(1, "Date is required"),
 
@@ -23,7 +22,7 @@ export const invoiceSchema = z.object({
 
   fromEmail: z.string().email("Invalid Email address"),
 
-  fromNumber: z.string().min(1,"Enter your phone number"),
+  fromNumber: z.string().min(1, "Enter your phone number"),
 
   fromAddress: z.string().min(1, "Your address is required"),
 
@@ -31,7 +30,7 @@ export const invoiceSchema = z.object({
 
   clientEmail: z.string().email("Invalid Email address"),
 
-  clientNumber: z.string().min(1,"Enter client phone number"),
+  clientNumber: z.string().min(1, "Enter client phone number"),
 
   clientAddress: z.string().min(1, "Client address is required"),
 

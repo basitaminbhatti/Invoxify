@@ -23,13 +23,13 @@ import { useActionState, useState } from "react";
 import { useForm } from "@conform-to/react";
 import { parseWithZod } from "@conform-to/zod";
 import { invoiceSchema } from "@/app/utils/zodSchemas";
-import { createInvoice } from "@/app/actions";
+import { handleInvoiceActions } from "@/app/actions";
 import { formatCurrency } from "@/app/utils/formatCurrency";
 import { SubmitButton } from "./SubmitButtons";
 import Link from "next/link";
 
 export default function CreateInvoice() {
-  const [lastResult, action] = useActionState(createInvoice, undefined);
+  const [lastResult, action] = useActionState(handleInvoiceActions, undefined);
   const [form, fields] = useForm({
     lastResult,
 
@@ -108,16 +108,6 @@ export default function CreateInvoice() {
               <p className="text-red-500 text-sm">{fields.currency.errors}</p>
             </div>
           </div>
-          {/* ++++++++++++++ Account Information ++++++++++++++ */}
-          {/* <div>
-            <Label>Account Information:</Label>
-            <div className="grid md:grid-cols-2 gap-3 mb-6">
-              <Input placeholder="Bank Name" />
-              <Input placeholder="Account Name" />
-              <Input placeholder="Account Number" />
-              <Input placeholder="IBAN" />
-            </div>
-          </div> */}
           {/* ++++++++++++++ USER / CLIENT ++++++++++++++ */}
           <div className="grid md:grid-cols-2 gap-6 mb-6">
             {/* =========== FROM =========== */}
@@ -365,15 +355,30 @@ export default function CreateInvoice() {
             <p className="text-red-500 text-sm">{fields.note.errors}</p>
           </div>
           {/* ++++++++++++++ BUTTONS ++++++++++++++ */}
-          <div className="flex items-center gap-4 justify-end mt-6">
+          <div className="flex items-center gap-4 justify-between mt-6">
             <Link
               className={buttonVariants({ variant: "outline" })}
               href="/dashboard/invoices"
             >
               Cancel
             </Link>
-            <div>
-              <SubmitButton text="Send Invoice to Client" />
+            <div className="flex gap-4">
+              <div>
+                <SubmitButton
+                  value="draftInvoice"
+                  variant="secondary"
+                  text="Save as Draft"
+                  name="action"
+                />
+              </div>
+              <div>
+                <SubmitButton
+                  value="createInvoice"
+                  variant="default"
+                  text="Send Invoice to Client"
+                  name="action"
+                />
+              </div>
             </div>
           </div>
         </form>

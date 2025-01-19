@@ -39,7 +39,17 @@ export async function InvoiceList() {
               })}
             </TableCell>
             <TableCell>
-              <Badge>{invoice.status}</Badge>
+              <Badge
+                variant={
+                  invoice.status === "PAID"
+                    ? "default"
+                    : invoice.status === "PENDING"
+                    ? "secondary"
+                    : "outline"
+                }
+              >
+                {invoice.status}
+              </Badge>
             </TableCell>
             <TableCell>
               {new Intl.DateTimeFormat("en-US", {

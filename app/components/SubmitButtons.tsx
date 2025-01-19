@@ -6,6 +6,9 @@ import { Loader2 } from "lucide-react";
 
 interface iAppProps {
   text: string;
+  name?: string;
+  value?: string;
+  onClick?: (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void;
   variant?:
     | "default"
     | "destructive"
@@ -17,16 +20,35 @@ interface iAppProps {
     | undefined;
 }
 
-export function SubmitButton({ text, variant }: iAppProps) {
+export function SubmitButton({
+  text,
+  variant,
+  value,
+  name,
+  onClick,
+}: iAppProps) {
   const { pending } = useFormStatus();
   return (
     <>
       {pending ? (
-        <Button disabled className="w-full" variant={variant}>
+        <Button
+          disabled
+          className="w-full"
+          variant={variant}
+          value={value}
+          name={name}
+        >
           <Loader2 className="size-4 mr-2 animate-spin" /> Please wait...
         </Button>
       ) : (
-        <Button type="submit" className="w-full" variant={variant}>
+        <Button
+          type="submit"
+          className="w-full"
+          variant={variant}
+          value={value}
+          name={name}
+          onClick={onClick}
+        >
           {text}
         </Button>
       )}

@@ -33,7 +33,7 @@ export async function onboardUser(prevState: any, formData: FormData) {
   return redirect("/dashboard");
 }
 
-// ================== Create Invoice =====================
+// ================== Create Invoice with Email =====================
 export async function createInvoice(prevState: any, formData: FormData) {
   const session = await RequireUser();
 
@@ -107,6 +107,46 @@ export async function createInvoice(prevState: any, formData: FormData) {
   return redirect("/dashboard/invoices");
 }
 
+// ================== Draft Invoice =====================
+export async function draftInvoice(prevState: any, formData: FormData) {
+  const session = await RequireUser();
+
+  const submission = parseWithZod(formData, {
+    schema: invoiceSchema,
+  });
+
+  if (submission.status !== "success") {
+    return submission.reply();
+  }
+
+  const data = await prisma.invoice.create({
+    data: {
+      clientAddress: submission.value.clientAddress,
+      clientEmail: submission.value.clientEmail,
+      clientNumber: submission.value.clientNumber,
+      clientName: submission.value.clientName,
+      currency: submission.value.currency,
+      date: submission.value.date,
+      dueDate: submission.value.dueDate,
+      fromAddress: submission.value.fromAddress,
+      fromNumber: submission.value.fromNumber,
+      fromEmail: submission.value.fromEmail,
+      fromName: submission.value.fromName,
+      invoiceItemDescription: submission.value.invoiceItemDescription,
+      invoiceItemQuantity: submission.value.invoiceItemQuantity,
+      invoiceItemRate: submission.value.invoiceItemRate,
+      invoiceName: submission.value.invoiceName,
+      invoiceNumber: submission.value.invoiceNumber,
+      status: "DRAFT",
+      total: submission.value.total,
+      note: submission.value.note,
+      userId: session.user?.id,
+    },
+  });
+
+  return redirect("/dashboard/invoices");
+}
+
 // ================== Update Invoice =====================
 export async function editInvoice(prevState: any, formData: FormData) {
   const session = await RequireUser();
@@ -146,6 +186,85 @@ export async function editInvoice(prevState: any, formData: FormData) {
   });
   return redirect("/dashboard/invoices");
 }
+// ================== Update Draft Invoice =====================
+export async function editDraftInvoice(prevState: any, formData: FormData) {
+  const session = await RequireUser();
+
+  const submission = parseWithZod(formData, {
+    schema: invoiceSchema,
+  });
+
+  if (submission.status !== "success") {
+    return submission.reply();
+  }
+
+  const data = await prisma.invoice.update({
+    where: {
+      id: formData.get("id") as string,
+      userId: session.user?.id,
+    },
+    data: {
+      clientAddress: submission.value.clientAddress,
+      clientEmail: submission.value.clientEmail,
+      clientName: submission.value.clientName,
+      currency: submission.value.currency,
+      date: submission.value.date,
+      dueDate: submission.value.dueDate,
+      fromAddress: submission.value.fromAddress,
+      fromEmail: submission.value.fromEmail,
+      fromName: submission.value.fromName,
+      invoiceItemDescription: submission.value.invoiceItemDescription,
+      invoiceItemQuantity: submission.value.invoiceItemQuantity,
+      invoiceItemRate: submission.value.invoiceItemRate,
+      invoiceName: submission.value.invoiceName,
+      invoiceNumber: submission.value.invoiceNumber,
+      status: "DRAFT",
+      total: submission.value.total,
+      note: submission.value.note,
+    },
+  });
+  return redirect("/dashboard/invoices");
+}
+
+// ================== Update Client Invoice with Email =====================
+export async function editClientInvoice(prevState: any, formData: FormData) {
+  const session = await RequireUser();
+
+  const submission = parseWithZod(formData, {
+    schema: invoiceSchema,
+  });
+
+  if (submission.status !== "success") {
+    return submission.reply();
+  }
+
+  const data = await prisma.invoice.update({
+    where: {
+      id: formData.get("id") as string,
+      userId: session.user?.id,
+    },
+    data: {
+      clientAddress: submission.value.clientAddress,
+      clientEmail: submission.value.clientEmail,
+      clientName: submission.value.clientName,
+      currency: submission.value.currency,
+      date: submission.value.date,
+      dueDate: submission.value.dueDate,
+      fromAddress: submission.value.fromAddress,
+      fromEmail: submission.value.fromEmail,
+      fromName: submission.value.fromName,
+      invoiceItemDescription: submission.value.invoiceItemDescription,
+      invoiceItemQuantity: submission.value.invoiceItemQuantity,
+      invoiceItemRate: submission.value.invoiceItemRate,
+      invoiceName: submission.value.invoiceName,
+      invoiceNumber: submission.value.invoiceNumber,
+      status: "PENDING",
+      total: submission.value.total,
+      note: submission.value.note,
+    },
+  });
+  return redirect("/dashboard/invoices");
+}
 
 // ================== Delete Invoice =====================
 export async function DeleteInvoice(invoiceId: string) {
@@ -176,4 +295,24 @@ export async function MarkAsPaidAction(invoiceId: string) {
   });
 
   return redirect("/dashboard/invoices");
+}
+// ================== handleInvoiceActions =====================
+export async function handleInvoiceActions(prevState: any, formData: FormData) {
+  const actionType = formData.get("action") as string | null;
+  if (!actionType) {
+    throw new Error("Action type is required.");
+  }
+  if (actionType === "draftInvoice") {
+    return draftInvoice(prevState, formData);
+  } else if (actionType === "createInvoice") {
+    return createInvoice(prevState, formData);
+  } else if (actionType === "editDraftInvoice") {
+    return editDraftInvoice(prevState, formData);
+  } else if (actionType === "editClientInvoice") {
+    return editClientInvoice(prevState, formData);
+  } else if (actionType === "editInvoice") {
+    return editInvoice(prevState, formData);
+  } else {
+    throw new Error("Invalid action type");
+  }
 }

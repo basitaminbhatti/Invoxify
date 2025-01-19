@@ -114,4 +114,5 @@ model Invoice {
 enum InvoiceStatus {
   PAID
   PENDING
+  DRAFT
 }
