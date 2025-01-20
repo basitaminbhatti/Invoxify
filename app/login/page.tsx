@@ -10,6 +10,9 @@ import { Input } from "@/components/ui/input";
 import { auth, signIn } from "../utils/auth";
 import { SubmitButton } from "../components/SubmitButtons";
 import { redirect } from "next/navigation";
+import Image from "next/image";
+import logo from "@/public/invoxify_Logo.png";
+
 export default async function Login() {
   // This will check is the user is already login if yes then it will redirect to the dashboard page
   const session = await auth();
@@ -18,13 +21,18 @@ export default async function Login() {
   }
   return (
     <>
-      <div className="flex h-screen w-full items-center justify-center px-4">
-        <Card className="max-w-sm">
-          <CardHeader>
-            <CardTitle className="text-2xl">Login</CardTitle>
-            <CardDescription>
-              Enter your credentials to login to your account
-            </CardDescription>
+      <div className="flex h-screen w-full items-center justify-center px-4 bg-gray-50">
+        <Card className="max-w-lg md:p-4">
+          <CardHeader className="flex flex-col gap-4 justify-center items-center text-center">
+            <Image src={logo} alt="logo" className="w-[250px]" />
+            <div>
+              <CardTitle className="text-2xl">
+                Sign in to your account
+              </CardTitle>
+              <CardDescription>
+                Enter your credentials to login to your account
+              </CardDescription>
+            </div>
           </CardHeader>
           <CardContent>
             <form

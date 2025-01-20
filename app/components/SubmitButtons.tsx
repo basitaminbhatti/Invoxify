@@ -43,7 +43,7 @@ export function SubmitButton({
       ) : (
         <Button
           type="submit"
-          className="w-full"
+          className="w-full bg-green-700 hover:bg-green-900"
           variant={variant}
           value={value}
           name={name}

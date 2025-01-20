@@ -23,7 +23,7 @@ export async function InvoiceList() {
           <TableHead>Customer</TableHead>
           <TableHead>Amount</TableHead>
           <TableHead>Status</TableHead>
-          <TableHead>Date</TableHead>
+          <TableHead>Created at</TableHead>
           <TableHead className="text-right">Actions</TableHead>
         </TableRow>
       </TableHeader>

@@ -1,4 +1,5 @@
 import { InvoiceList } from "@/app/components/InvoiceList";
+import { InvoiceListFallBack } from "@/app/components/InvoiceListFallback";
 import { buttonVariants } from "@/components/ui/button";
 import {
   Card,
@@ -9,6 +10,7 @@ import {
 } from "@/components/ui/card";
 import { PlusIcon } from "lucide-react";
 import Link from "next/link";
+import { Suspense } from "react";
 
 export default async function invoices() {
   return (
@@ -25,7 +27,9 @@ export default async function invoices() {
         </div>
       </CardHeader>
       <CardContent>
-        <InvoiceList />
+        <Suspense fallback={<InvoiceListFallBack />}>
+          <InvoiceList />
+        </Suspense>
       </CardContent>
     </Card>
   );

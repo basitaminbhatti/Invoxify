@@ -1,9 +1,11 @@
 import CreateInvoice from "@/app/components/CreateInvoice";
+import InvoiceFallBack from "@/app/components/InvoiceFallback";
+import { Suspense } from "react";
 
 export default function InvoiceCreateRoute() {
   return (
-    <div>
+    <Suspense fallback={<InvoiceFallBack />}>
       <CreateInvoice />
-    </div>
+    </Suspense>
   );
 }

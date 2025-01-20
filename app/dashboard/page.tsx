@@ -8,7 +8,7 @@ export default async function DashboardPage() {
   return (
     <>
       <DashboardBlocks />
-      <div className="grid gap-4 lg:grid-cols-3 md:gap-8">
+      <div className="grid gap-4 lg:grid-cols-3 md:gap-6">
         <div className="lg:col-span-2">
           <InvoiceGraph />
         </div>
