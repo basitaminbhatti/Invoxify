@@ -27,9 +27,9 @@ export default function HeroSection() {
             <div className="text-center">
               <h1 className="text-5xl font-semibold tracking-tight text-balance text-gray-900 sm:text-7xl">
                 Welcome to{" "}
-                <TypingAnimation className="text-5xl sm:text-7xl inline-flex animate-text-gradient bg-gradient-to-r from-[#63f2ad] via-[#25e28d] to-[#cdfee1] bg-[200%_auto] bg-clip-text  text-transparent">
+                <span className="text-5xl sm:text-7xl inline-flex animate-text-gradient bg-gradient-to-r from-[#63f2ad] via-[#25e28d] to-[#cdfee1] bg-[200%_auto] bg-clip-text  text-transparent">
                   Invoxify
-                </TypingAnimation>
+                </span>
               </h1>
               <TextAnimate
                 animation="slideUp"

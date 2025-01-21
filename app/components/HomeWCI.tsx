@@ -36,13 +36,9 @@ export default function HomeWCI() {
           <h2 className="text-base/7 font-semibold text-green-600">
             The Invoxify Advantage
           </h2>
-          <TextAnimate
-            animation="blurInUp"
-            by="character"
-            className="mt-2 text-4xl font-semibold tracking-tight text-pretty text-gray-900 sm:text-5xl lg:text-balance"
-          >
+          <p className="mt-2 text-4xl font-semibold tracking-tight text-pretty text-gray-900 sm:text-5xl lg:text-balance">
             Why Choose Invoxify?
-          </TextAnimate>
+          </p>
         </div>
         <div className="mx-auto mt-16 max-w-2xl sm:mt-20 lg:mt-24 lg:max-w-4xl">
           <dl className="grid max-w-xl grid-cols-1 gap-x-8 gap-y-10 lg:max-w-none lg:grid-cols-2 lg:gap-y-16">
@@ -55,9 +51,7 @@ export default function HomeWCI() {
                       className="size-6 text-white"
                     />
                   </div>
-                  <TextAnimate animation="scaleUp" by="text">
-                    {feature.name}
-                  </TextAnimate>
+                  {feature.name}
                 </dt>
                 <dd className="mt-2 text-base/7 text-gray-600">
                   {feature.description}
