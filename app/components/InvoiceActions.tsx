@@ -118,7 +118,10 @@ export function InvoiceActions({ id, status }: iAppProps) {
 
         {/* ============ ITEM FOUR DELETE INVOICE ============ */}
         <DropdownMenuItem asChild>
-          <Link href={`/dashboard/invoices/${id}/delete`}>
+          <Link
+            href={`/dashboard/invoices/${id}/delete`}
+            className="cursor-pointer"
+          >
             <Trash className="size-4 mr-2" /> Delete Invoice
           </Link>
         </DropdownMenuItem>
@@ -128,7 +131,10 @@ export function InvoiceActions({ id, status }: iAppProps) {
         {/* ============ ITEM FIVE MARK AS PAID ============ */}
         {status !== "PAID" && (
           <DropdownMenuItem asChild>
-            <Link href={`/dashboard/invoices/${id}/paid`}>
+            <Link
+              href={`/dashboard/invoices/${id}/paid`}
+              className="cursor-pointer"
+            >
               <CheckCircle className="size-4 mr-2" /> Mark as Paid
             </Link>
           </DropdownMenuItem>

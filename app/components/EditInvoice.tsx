@@ -70,6 +70,7 @@ export default function EditInvoice({ data }: iAppProps) {
               {/* hidden input to store the id value for Edit Invoice Only to avoid Error */}
               <input type="hidden" name="id" value={data.id} />
               <input type="hidden" name="action" id="actionInput" />
+              <input type="hidden" name="status" defaultValue={data.status} />
             </div>
             <p className="text-sm text-red-500">{fields.invoiceName.errors}</p>
           </div>
@@ -98,7 +99,7 @@ export default function EditInvoice({ data }: iAppProps) {
             <div>
               <Label>Currency</Label>
               <Select
-                defaultValue="PKR"
+                defaultValue={data.currency}
                 name={fields.currency.name}
                 key={fields.currency.key}
                 onValueChange={(value) => setCurrency(value)}

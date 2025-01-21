@@ -17,7 +17,7 @@ async function getData(userId: string) {
       currency: true,
     },
     orderBy: {
-      createdAt: "asc",
+      createdAt: "desc",
     },
     take: 7,
   });
@@ -42,30 +42,33 @@ export async function RecentInvoices() {
       </CardHeader>
       <CardContent className="flex flex-col gap-8">
         <AnimatedList>
-          {data.map((item) => (
-            <div className="flex items-center gap-4" key={item.id}>
-              <Avatar className="hidden sm:flex size-9">
-                <AvatarFallback>
-                  {item.clientName.slice(0, 2).toUpperCase()}
-                </AvatarFallback>
-              </Avatar>
-              <div className="flex flex-col gap-1">
-                <p className="text-sm font-medium leadin-none">
-                  {item.clientName}
-                </p>
-                <p className="text-xs text-muted-foreground">
-                  {formatEmail(item.clientEmail)}
-                </p>
+          {data
+            .slice() //Create a shallow copy of the array to avoid mutating the original
+            .reverse() // Reverse the array to get it in descending order
+            .map((item) => (
+              <div className="flex items-center gap-4" key={item.id}>
+                <Avatar className="hidden sm:flex size-9">
+                  <AvatarFallback>
+                    {item.clientName.slice(0, 2).toUpperCase()}
+                  </AvatarFallback>
+                </Avatar>
+                <div className="flex flex-col gap-1">
+                  <p className="text-sm font-medium leadin-none">
+                    {item.clientName}
+                  </p>
+                  <p className="text-xs text-muted-foreground">
+                    {formatEmail(item.clientEmail)}
+                  </p>
+                </div>
+                <div className="ml-auto font-medium text-sm">
+                  +
+                  {formatCurrency({
+                    amount: item.total,
+                    currency: item.currency as any,
+                  })}
+                </div>
               </div>
-              <div className="ml-auto font-medium text-sm">
-                +
-                {formatCurrency({
-                  amount: item.total,
-                  currency: item.currency as any,
-                })}
-              </div>
-            </div>
-          ))}
+            ))}
         </AnimatedList>
       </CardContent>
     </Card>

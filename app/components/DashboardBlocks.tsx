@@ -3,6 +3,7 @@ import { Activity, CreditCard, Users2Icon, Wallet } from "lucide-react";
 import prisma from "../utils/db";
 import { RequireUser } from "../utils/hooks";
 import { formatCurrency } from "../utils/formatCurrency";
+import NumberTicker from "@/components/ui/number-ticker";
 
 export async function DashboardBlocks() {
   const session = await RequireUser();
@@ -37,7 +38,9 @@ export async function DashboardBlocks() {
           <Users2Icon className="size-4 text-muted-foreground" />
         </CardHeader>
         <CardContent>
-          <h2 className="text-2xl font-bold">+{data.length}</h2>
+          <h2 className="text-2xl font-bold">
+            +<NumberTicker value={data.length} />
+          </h2>
           <p className="text-xs text-muted-foreground">Invoices Issued</p>
         </CardContent>
       </Card>
@@ -48,7 +51,9 @@ export async function DashboardBlocks() {
           <CreditCard className="size-4 text-muted-foreground" />
         </CardHeader>
         <CardContent>
-          <h2 className="text-2xl font-bold">+{paidinvoices.length}</h2>
+          <h2 className="text-2xl font-bold">
+            +<NumberTicker value={paidinvoices.length} />
+          </h2>
           <p className="text-xs text-muted-foreground">Paid Invoices </p>
         </CardContent>
       </Card>
@@ -61,7 +66,9 @@ export async function DashboardBlocks() {
           <Activity className="size-4 text-muted-foreground" />
         </CardHeader>
         <CardContent>
-          <h2 className="text-2xl font-bold">+{pendingInvoices.length}</h2>
+          <h2 className="text-2xl font-bold">
+            +<NumberTicker value={pendingInvoices.length} />
+          </h2>
           <p className="text-xs text-muted-foreground">Pending Invoices </p>
         </CardContent>
       </Card>
