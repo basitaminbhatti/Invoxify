@@ -54,6 +54,8 @@ export async function GET(
     compress: true,
   });
 
+  // =========== FORMAT DATE ===========
+
   const invoiceDate = new Intl.DateTimeFormat("en-US", {
     dateStyle: "long",
   }).format(new Date(data.date));
@@ -180,7 +182,7 @@ export async function GET(
   return new NextResponse(pdfBuffer, {
     headers: {
       "Content-Type": "application/pdf",
-      "Content-Disposition": "inline",
+      "Content-Disposition": `inline; filename="Invoxify - ${data.invoiceName}.pdf"`,
     },
   });
 }
