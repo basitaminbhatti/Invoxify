@@ -9,7 +9,7 @@ import {
 } from "@/components/ui/card";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Activity, CreditCard, Users2Icon, Wallet } from "lucide-react";
-export default function Checking() {
+export default function DashboardFallBack() {
   return (
     <>
       {/* ========================== DashboardBlocks ========================== */}

@@ -51,6 +51,7 @@ export async function GET(
     orientation: "portrait",
     unit: "mm",
     format: "a4",
+    compress: true,
   });
 
   const invoiceDate = new Intl.DateTimeFormat("en-US", {
@@ -65,7 +66,7 @@ export async function GET(
   });
 
   // =========== ADD HEADER ===========
-  pdf.addImage(invoxifyLogo, "JPEG", 10, 0, 80, 80);
+  pdf.addImage(invoxifyLogo, "JPEG", 10, 0, 80, 80, "", "FAST");
   pdf.setFontSize(12);
   pdf.setFont("courier");
   pdf.text(`Invoice Number: # ${data.invoiceNumber}`, 130, 40);
@@ -170,7 +171,7 @@ export async function GET(
   }
 
   // =========== FOOTER ===========
-  pdf.addImage(invoxifyFooterPDF, "JPEG", 0, 238, 210, 60);
+  pdf.addImage(invoxifyFooterPDF, "JPEG", 0, 238, 210, 60, "", "FAST");
 
   // ===========  GENERATE PDF AS BUFFER ===========
   const pdfBuffer = Buffer.from(pdf.output("arraybuffer"));
