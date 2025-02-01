@@ -42,7 +42,7 @@ export default function LoginPage() {
               <Button
                 onClick={() => setShowEmailLogin(true)}
                 variant="outline"
-                className="w-full mt-4"
+                className="w-full mt-3"
               >
                 <Mail />
                 Login with Email
