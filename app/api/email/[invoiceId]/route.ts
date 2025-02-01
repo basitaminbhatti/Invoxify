@@ -63,7 +63,7 @@ export async function POST(
         InvoiceDate: invoiceDate,
         InvoiceAmount: invoicetotalAmount,
         DueDate: invoicedueDate,
-        InvoiceLink: `http://localhost:3000/api/invoice/${invoiceData.id}`,
+        InvoiceLink: `https://invoxify-plum.vercel.app/api/invoice/${invoiceData.id}`,
         FromName: invoiceData.fromName,
         Year: new Date().getFullYear().toString(),
       },

@@ -5,7 +5,8 @@ import { useFormStatus } from "react-dom";
 import { Loader2 } from "lucide-react";
 
 interface iAppProps {
-  text: string;
+  children?: React.ReactNode; // Allow passing children
+  text?: string;
   name?: string;
   value?: string;
   onClick?: (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void;
@@ -21,6 +22,7 @@ interface iAppProps {
 }
 
 export function SubmitButton({
+  children,
   text,
   variant,
   value,
@@ -49,7 +51,7 @@ export function SubmitButton({
           name={name}
           onClick={onClick}
         >
-          {text}
+          {children || text}
         </Button>
       )}
     </>

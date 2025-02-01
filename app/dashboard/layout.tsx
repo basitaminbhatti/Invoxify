@@ -38,12 +38,14 @@ async function getUser(userId: string) {
       firstName: true,
       lastName: true,
       address: true,
+      image: true,
     },
   });
 
   if (!data?.firstName || !data.lastName || !data.address) {
     redirect("/onboarding");
   }
+  return data;
 }
 
 export default async function DashboardLayout({
@@ -102,6 +104,7 @@ export default async function DashboardLayout({
                     size="icon"
                   >
                     <User className="size-5" />
+                    {/* <img src={data.image} alt="User" /> */}
                   </Button>
                 </DropdownMenuTrigger>
                 <DropdownMenuContent align="end">

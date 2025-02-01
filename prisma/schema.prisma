@@ -12,6 +12,7 @@ model User {
   firstName     String?
   lastName      String?
   address       String?
+  name          String? // Add this field here because of the Auth0 provider
   email         String          @unique
   emailVerified DateTime?
   image         String?

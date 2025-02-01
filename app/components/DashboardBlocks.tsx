@@ -39,7 +39,8 @@ export async function DashboardBlocks() {
         </CardHeader>
         <CardContent>
           <h2 className="text-2xl font-bold">
-            +<NumberTicker value={data.length} />
+            {data.length === 0 ? "0" : `+`}
+            <NumberTicker value={data.length} />
           </h2>
           <p className="text-xs text-muted-foreground">Invoices Issued</p>
         </CardContent>
@@ -52,7 +53,8 @@ export async function DashboardBlocks() {
         </CardHeader>
         <CardContent>
           <h2 className="text-2xl font-bold">
-            +<NumberTicker value={paidinvoices.length} />
+            {paidinvoices.length === 0 ? "0" : `+`}
+            <NumberTicker value={paidinvoices.length} />
           </h2>
           <p className="text-xs text-muted-foreground">Paid Invoices </p>
         </CardContent>
@@ -67,7 +69,8 @@ export async function DashboardBlocks() {
         </CardHeader>
         <CardContent>
           <h2 className="text-2xl font-bold">
-            +<NumberTicker value={pendingInvoices.length} />
+            {pendingInvoices.length === 0 ? "0" : `+`}
+            <NumberTicker value={pendingInvoices.length} />
           </h2>
           <p className="text-xs text-muted-foreground">Pending Invoices </p>
         </CardContent>
