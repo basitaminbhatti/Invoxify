@@ -25,6 +25,7 @@ import { signOut } from "../utils/auth";
 import prisma from "../utils/db";
 import { redirect } from "next/navigation";
 import { Toaster } from "@/components/ui/sonner";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 
 // This funtion if the user has completed the onboarding process.
 // If the user has not completed the onboarding process,
@@ -97,19 +98,20 @@ export default async function DashboardLayout({
 
             <div className="flex items-center ml-auto">
               <DropdownMenu>
-                <DropdownMenuTrigger asChild>
-                  <Button
-                    className="rounded-full"
-                    variant="outline"
-                    size="icon"
-                  >
-                    <User className="size-5" />
-                    {/* <img src={data.image} alt="User" /> */}
-                  </Button>
+                <DropdownMenuTrigger>
+                  <Avatar className="w-12 h-12">
+                    <AvatarImage src={data?.image as any} alt="@shadcn" />
+                    <AvatarFallback>
+                      {(data?.firstName || "NA").slice(0, 2).toUpperCase()}
+                    </AvatarFallback>
+                  </Avatar>
                 </DropdownMenuTrigger>
                 <DropdownMenuContent align="end">
                   <DropdownMenuLabel>
-                    <Link href="#" className="cursor-pointer">
+                    <Link
+                      href="/dashboard/my-account"
+                      className="cursor-pointer"
+                    >
                       My Account
                     </Link>
                   </DropdownMenuLabel>

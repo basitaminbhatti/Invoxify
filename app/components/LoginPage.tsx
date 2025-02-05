@@ -22,7 +22,7 @@ export default function LoginPage() {
         exit={{ opacity: 0, y: 20 }}
         className="flex w-full flex-col md:w-1/2"
       >
-        <div className="lg:w-[28rem] mx-auto my-auto flex flex-col justify-center text-center pt-8 md:px-6 md:pt-0">
+        <div className="lg:w-[28rem] mx-auto my-auto flex flex-col justify-center text-center pt-8 px-6 md:pt-0">
           <div className="flex mx-auto my-auto md:px-6 pb-8">
             <Link href="/">
               <Image src={logo} alt="logo" className="w-[250px]" />

@@ -15,7 +15,7 @@ export default async function Login() {
   return (
     <>
       <div className="flex flex-wrap w-screen h-screen overflow-hidden">
-        <div className="lg:w-[28rem] mx-auto my-auto flex flex-col justify-center text-center pt-8 md:px-6 md:pt-0">
+        <div className="lg:w-[28rem] mx-auto my-auto flex flex-col justify-center text-center pt-8 px-6 md:pt-0">
           <div className="mb-4 mx-auto flex size-20 items-center justify-center rounded-full bg-green-100">
             <Mail className="size-12 text-green-600" />
           </div>

@@ -1,4 +1,4 @@
-import { Button, buttonVariants } from "@/components/ui/button";
+import { Button } from "@/components/ui/button";
 import {
   Sheet,
   SheetContent,
@@ -21,7 +21,7 @@ export default function Header() {
     <header>
       <nav className="border-gray-200 px-4 lg:px-6 py-2.5">
         <div className="flex flex-wrap justify-between items-center mx-auto max-w-screen-xl">
-          <Link href="https://flowbite.com">
+          <Link href="/">
             <Image src={logo} alt="Invoxify Logo" className="w-[200px]" />
           </Link>
           <div className="flex items-center lg:order-2 gap-4">
