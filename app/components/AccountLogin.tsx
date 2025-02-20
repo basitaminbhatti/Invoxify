@@ -27,6 +27,17 @@ export default function AccountLogin() {
           Login with Google
         </SubmitButton>
       </form>
+      {/* ====== Linkedin ====== */}
+      <form action={signInWithProvider.bind(null, "linkedin")}>
+        <SubmitButton variant="outline">
+          <img
+            src="https://www.svgrepo.com/show/354000/linkedin-icon.svg"
+            alt="Linkedin"
+            className="h-[18px] w-[18px]"
+          ></img>
+          Login with Linkedin
+        </SubmitButton>
+      </form>
       {/* ====== Github ====== */}
       <form action={signInWithProvider.bind(null, "github")}>
         <SubmitButton variant="outline">

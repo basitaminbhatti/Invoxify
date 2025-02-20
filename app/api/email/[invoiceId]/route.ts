@@ -30,19 +30,15 @@ export async function POST(
 
     // EMAIL SENDING
     const sender = {
-      email: "hello@demomailtrap.com",
-      name: "Abdul Basit",
+      email: "no-reply@invoxify.tech",
+      name: "Invoxify",
     };
 
     const recipients = [
       {
-        email: "basitaminbhatti@gmail.com",
+        email: invoiceData.clientEmail,
       },
     ];
-
-    const invoicedueDate = new Intl.DateTimeFormat("en-US", {
-      dateStyle: "long",
-    }).format(new Date(invoiceData.dueDate));
 
     const invoiceDate = new Intl.DateTimeFormat("en-US", {
       dateStyle: "long",
@@ -62,8 +58,7 @@ export async function POST(
         InvoiceNumber: invoiceData.invoiceNumber,
         InvoiceDate: invoiceDate,
         InvoiceAmount: invoicetotalAmount,
-        DueDate: invoicedueDate,
-        InvoiceLink: `https://invoxify-plum.vercel.app/api/invoice/${invoiceData.id}`,
+        InvoiceLink: `https://www.invoxify.tech/api/invoice/${invoiceData.id}`,
         FromName: invoiceData.fromName,
         Year: new Date().getFullYear().toString(),
       },

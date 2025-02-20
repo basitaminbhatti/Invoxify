@@ -70,39 +70,42 @@ export async function createInvoice(prevState: any, formData: FormData) {
     },
   });
 
-  // // EMAIL SENDING
-  // const sender = {
-  //   email: "hello@demomailtrap.com",
-  //   name: "Abdul Basit",
-  // };
+  // EMAIL SENDING
+  const sender = {
+    email: "no-reply@invoxify.tech",
+    name: "Invoxify",
+  };
 
-  // const recipients = [
-  //   {
-  //     email: "basitaminbhatti@gmail.com",
-  //   },
-  // ];
+  const recipients = [
+    {
+      email: submission.value.clientEmail,
+    },
+  ];
 
-  // const invoicedueDate = new Intl.DateTimeFormat("en-US", {
-  //   dateStyle: "long",
-  // }).format(new Date(submission.value.date));
+  const invoiceDate = new Intl.DateTimeFormat("en-US", {
+    dateStyle: "long",
+  }).format(new Date(submission.value.date));
 
-  // const invoicetotalAmount = formatCurrency({
-  //   amount: submission.value.total,
-  //   currency: submission.value.currency as any,
-  // });
+  const invoicetotalAmount = formatCurrency({
+    amount: submission.value.total,
+    currency: submission.value.currency as any,
+  });
 
-  // emailClient.send({
-  //   from: sender,
-  //   to: recipients,
-  //   template_uuid: "25d47ecd-845a-40a7-8e06-8179e48e0058",
-  //   template_variables: {
-  //     clientName: submission.value.clientName,
-  //     invoiceNumber: submission.value.invoiceNumber,
-  //     dueDate: invoicedueDate,
-  //     totalAmount: invoicetotalAmount,
-  //     invoiceLink: `http://localhost:3000/api/invoice/${data.id}`,
-  //   },
-  // });
+  emailClient.send({
+    from: sender,
+    to: recipients,
+    template_uuid: "b019737b-1091-4f5f-9341-cee4ec297ea3",
+    template_variables: {
+      first_name: submission.value.clientName,
+      InvoiceNumber: submission.value.invoiceNumber,
+      InvoiceDate: invoiceDate,
+      InvoiceAmount: invoicetotalAmount,
+      InvoiceLink: `https://www.invoxify.tech/api/invoice/${data.id}`,
+      FromEmail: submission.value.fromEmail,
+      FromName: submission.value.fromName,
+      Year: new Date().getFullYear().toString(),
+    },
+  });
 
   return redirect("/dashboard/invoices");
 }
